@@ -1,8 +1,9 @@
-from typing import Optional, List
 from datetime import datetime
-from uuid import UUID
-from sqlmodel import Field, SQLModel, Relationship
 from enum import Enum
+from typing import List, Optional
+from uuid import UUID
+
+from sqlmodel import Field, Relationship, SQLModel
 
 class SampleStatus(str, Enum):
     ORDERED = "ORDERED"
@@ -54,4 +55,3 @@ class Shipment(SQLModel, table=True):
     shipped_at: datetime = Field(default_factory=datetime.utcnow)
 
     sample: Sample = Relationship(back_populates="shipment")
-    

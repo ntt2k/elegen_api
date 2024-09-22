@@ -36,19 +36,27 @@ FastAPI provides interactive API documentation. You can access it at the followi
 - **POST /samples/qc-results**: Log QC results of processed orders
 - **GET /samples/to-ship**: List samples that should be shipped
 - **POST /samples/shipped**: Record samples as shipped
-- **GET /orders/{orderUuid}/status**: Report sample statuses in order (Stretch Goal)
+- **POST /orders/status**: Report sample statuses in order (Stretch Goal)
 
 ## Project Structure
 
 ```
-elegen_api/
-├── app/
-│   ├── main.py
-│   ├── routers/
-│   └── models/
-├── Dockerfile
-├── docker-compose.yml
-└── README.md
+app/
+├── routes/
+│   ├── __init__.py
+│   ├── orders.py
+│   ├── samples.py
+│   └── health.py
+├── schemas/
+│   ├── __init__.py
+│   └── pydantic_models.py
+├── services/
+│   ├── __init__.py
+│   ├── order_service.py
+│   └── sample_service.py
+├── db.py
+├── models.py (SQLModel models)
+└── main.py
 ```
 
 ## Screenshots

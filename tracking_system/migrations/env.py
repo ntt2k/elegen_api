@@ -8,7 +8,7 @@ from sqlmodel import SQLModel
 
 from alembic import context
 
-from app.models import Order, Sample, QCResults, Shipment
+from app.schemas import Order, Sample, QCResults, Shipment
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
