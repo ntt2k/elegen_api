@@ -67,3 +67,12 @@ class OrderStatusResponse(BaseModel):
 
 class OrderStatusRequest(BaseModel):
     order_uuid_to_get_sample_statuses_for: UUID
+
+class SampleStatusRequest(BaseModel):
+    sample_uuid_to_get_tat_for: UUID
+
+
+class SampleTATStatusResponse(BaseModel):
+    sample_uuid: UUID
+    order_placed: str
+    sample_shipped: str | None

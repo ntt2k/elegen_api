@@ -13,7 +13,32 @@ from app.schemas.pydantic_models import (
     SampleToShip,
     SamplesToShipResponse,
     SamplesShippedInput,
+    SampleTATStatusResponse,
 )
+
+
+async def get_sample_tat_status(sample_uuid: UUID, session: AsyncSession):
+    # Fetch the order
+    sample_stmt = select(Sample).where(Sample.sample_uuid == sample_uuid)
+    smaple_result = await session.execute(sample_stmt)
+    sample = smaple_result.scalar_one()
+
+    if not sample:
+        raise HTTPException(
+            status_code=404, detail=f"Sample with UUID {sample_uuid} not found"
+        )
+
+    response = SampleTATStatusResponse(
+        sample_uuid=sample.sample_uuid,
+        order_placed=sample.created_at.isoformat(),
+        sample_shipped=(
+            sample.updated_at.isoformat()
+            if sample.status == SampleStatus.SHIPPED
+            else None
+        ),
+    )
+
+    return response
 
 
 async def get_samples_to_process(session: AsyncSession):
@@ -23,6 +48,8 @@ async def get_samples_to_process(session: AsyncSession):
         .where(Sample.status == SampleStatus.ORDERED)
         .outerjoin(QCResults)
         .where(QCResults.qc_id == None)
+        .order_by(Sample.created_at.desc())
+        .order_by(Sample.sample_uuid)
         .limit(96)
     )
     result = await session.execute(samples_query)
