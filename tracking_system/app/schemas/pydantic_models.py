@@ -23,6 +23,7 @@ class DuplicateSamplesResponse(BaseModel):
 class SampleToMake(BaseModel):
     sample_uuid: UUID
     sequence: str
+    created_at: str
 
 
 class SamplesToMakeResponse(BaseModel):

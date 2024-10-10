@@ -48,7 +48,7 @@ async def get_samples_to_process(session: AsyncSession):
         .where(Sample.status == SampleStatus.ORDERED)
         .outerjoin(QCResults)
         .where(QCResults.qc_id == None)
-        .order_by(Sample.created_at.desc())
+        .order_by(Sample.created_at)
         .order_by(Sample.sample_uuid)
         .limit(96)
     )
@@ -56,7 +56,11 @@ async def get_samples_to_process(session: AsyncSession):
     samples = result.scalars().all()
 
     samples_to_make = [
-        SampleToMake(sample_uuid=sample.sample_uuid, sequence=sample.sequence)
+        SampleToMake(
+            sample_uuid=sample.sample_uuid,
+            sequence=sample.sequence,
+            created_at=sample.created_at.isoformat(),
+        )
         for sample in samples
     ]
 

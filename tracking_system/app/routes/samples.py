@@ -15,6 +15,7 @@ from app.services.sample_service import (
     log_qc_results,
     get_samples_to_ship,
     record_samples_shipped,
+    get_sample_tat_status
 )
 
 router = APIRouter()
