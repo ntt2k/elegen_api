@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import List
 from uuid import UUID
 from app.models import SampleStatus, QCResult
 
@@ -10,7 +9,7 @@ class SampleInput(BaseModel):
 
 
 class OrderInput(BaseModel):
-    order: List[SampleInput]
+    order: list[SampleInput]
 
 
 class OrderResponse(BaseModel):
@@ -18,7 +17,7 @@ class OrderResponse(BaseModel):
 
 
 class DuplicateSamplesResponse(BaseModel):
-    repeat_sample_uuids: List[UUID]
+    repeat_sample_uuids: list[UUID]
 
 
 class SampleToMake(BaseModel):
@@ -27,7 +26,7 @@ class SampleToMake(BaseModel):
 
 
 class SamplesToMakeResponse(BaseModel):
-    samples_to_make: List[SampleToMake]
+    samples_to_make: list[SampleToMake]
 
 
 class QCResultInput(BaseModel):
@@ -40,7 +39,7 @@ class QCResultInput(BaseModel):
 
 
 class QCResultsInput(BaseModel):
-    samples_made: List[QCResultInput]
+    samples_made: list[QCResultInput]
 
 
 class SampleToShip(BaseModel):
@@ -50,11 +49,11 @@ class SampleToShip(BaseModel):
 
 
 class SamplesToShipResponse(BaseModel):
-    samples_to_ship: List[SampleToShip]
+    samples_to_ship: list[SampleToShip]
 
 
 class SamplesShippedInput(BaseModel):
-    samples_shipped: List[UUID]
+    samples_shipped: list[UUID]
 
 
 class SampleStatusResponse(BaseModel):
@@ -63,7 +62,7 @@ class SampleStatusResponse(BaseModel):
 
 
 class OrderStatusResponse(BaseModel):
-    sample_statuses: List[SampleStatusResponse]
+    sample_statuses: list[SampleStatusResponse]
 
 
 class OrderStatusRequest(BaseModel):

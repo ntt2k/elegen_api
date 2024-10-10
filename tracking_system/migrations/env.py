@@ -1,4 +1,5 @@
 import asyncio
+import os
 from logging.config import fileConfig
 
 from sqlalchemy import pool
@@ -8,7 +9,7 @@ from sqlmodel import SQLModel
 
 from alembic import context
 
-from app.schemas import Order, Sample, QCResults, Shipment
+from app.models import Order, Sample, QCResults, Shipment
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -24,6 +25,14 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 target_metadata = SQLModel.metadata
+
+# Get the DATABASE_URL from environment variable
+database_url = os.environ.get("DATABASE_URL")
+if database_url is None:
+    raise ValueError("DATABASE_URL environment variable is not set")
+
+# Override sqlalchemy.url with the value from DATABASE_URL
+config.set_main_option("sqlalchemy.url", database_url)
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
